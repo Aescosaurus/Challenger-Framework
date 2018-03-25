@@ -3,6 +3,8 @@ package Framework;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -21,11 +23,11 @@ class Window
 	public static final int ScreenWidth = 800;
 	public static final int ScreenHeight = 600;
 	
-	private Game theGame = new Game( this );
+	private JFrame frame;
+	
+	private Game theGame = new Game();
 	public Keyboard kbd = new Keyboard();
 	public Mouse mouse = new Mouse();
-	
-	private Graphics gfx;
 	// 
 	Window()
 	{
@@ -40,30 +42,39 @@ class Window
 			@Override
 			public void keyReleased( KeyEvent e )
 			{
-				kbd.Press( e.getKeyCode() );
+				kbd.Release( e.getKeyCode() );
 			}
 			
 			@Override
 			public void keyPressed( KeyEvent e )
 			{
-				kbd.Release( e.getKeyCode() );
+				kbd.Press( e.getKeyCode() );
 			}
 		} );
 		
 		addMouseListener( new MouseAdapter()
 		{
-            @Override
-            public void mousePressed( MouseEvent e )
-            {
-            	mouse.Click();
-            }
-
-            @Override
-            public void mouseReleased( MouseEvent e )
-            {
-                mouse.Release();
-            }
-        } );
+			@Override
+			public void mousePressed( MouseEvent e )
+			{
+				mouse.Click();
+			}
+			
+			@Override
+			public void mouseReleased( MouseEvent e )
+			{
+				mouse.Release();
+			}
+		} );
+		
+		addMouseMotionListener( new MouseAdapter()
+		{
+			@Override
+			public void mouseMoved( MouseEvent e )
+			{
+				mouse.MoveTo( e.getX(),e.getY() );
+			}
+		} );
 		
 		setFocusable( true );
 	}
@@ -72,7 +83,6 @@ class Window
 	protected void paintComponent( Graphics gfx )
 	{
 		super.paintComponent( gfx );
-		this.gfx = gfx;
 		
 		gfx.setColor( Color.BLACK );
 		gfx.fillRect( 0,0,ScreenWidth,ScreenHeight );
@@ -97,7 +107,7 @@ class Window
 	{
 		// Window mainPanel = new Window();
 		
-		JFrame frame = new JFrame( "Challenger Framework" );
+		frame = new JFrame( "Challenger Framework" );
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		frame.getContentPane().add( this );
 		frame.pack();
@@ -107,7 +117,7 @@ class Window
 	
 	public void Progress()
 	{
-		theGame.UpdateModel();
+		theGame.UpdateModel( this );
 		repaint();
 	}
 }

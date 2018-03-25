@@ -5,24 +5,25 @@ import java.awt.Graphics;
 
 public class Game
 {
-	Window wnd;
 	// User created variables.
-	
+	int x = 50;
 	// 
-	public Game( Window wnd )
+	public Game()
 	{
-		this.wnd = wnd;
-		// Initialization code here.
 		
 	}
 	
-	public void UpdateModel()
+	public void UpdateModel( Window wnd )
 	{
-		
+		if( wnd.kbd.KeyIsPressed( 'D' ) )
+		{
+			++x;
+		}
 	}
 	
 	public void ComposeFrame( Graphics gfx )
 	{
-		
+		gfx.setColor( Color.red );
+		gfx.fillRect( x,0,10,10 );
 	}
 }
