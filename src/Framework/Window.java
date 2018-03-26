@@ -3,8 +3,6 @@ package Framework;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -16,21 +14,26 @@ import javax.swing.JPanel;
 import Framework.Game;
 
 @SuppressWarnings( "serial" )
+// Pretty much controls all other classes.
 class Window
 	extends
 	JPanel
 {
+	// Changing these changes screen size.
 	public static final int ScreenWidth = 800;
 	public static final int ScreenHeight = 600;
 	
+	// Gotta protecc your privates.
 	private JFrame frame;
-	
 	private Game theGame = new Game();
+	
+	// Use these to access keyboard and mouse.
 	public Keyboard kbd = new Keyboard();
 	public Mouse mouse = new Mouse();
 	// 
 	Window()
 	{
+		// Now listen closely!
 		addKeyListener( new KeyListener()
 		{
 			@Override
@@ -52,6 +55,7 @@ class Window
 			}
 		} );
 		
+		// Here's the deal!
 		addMouseListener( new MouseAdapter()
 		{
 			@Override
@@ -67,6 +71,7 @@ class Window
 			}
 		} );
 		
+		// He'll slip and slide, on this banana peel!
 		addMouseMotionListener( new MouseAdapter()
 		{
 			@Override
@@ -79,6 +84,7 @@ class Window
 		setFocusable( true );
 	}
 	
+	// Only gets called sometimes, not too reliable.
 	@Override
 	protected void paintComponent( Graphics gfx )
 	{
@@ -88,6 +94,7 @@ class Window
 		gfx.fillRect( 0,0,ScreenWidth,ScreenHeight );
 	}
 	
+	// Called after game updates.
 	@Override
 	public void paint( Graphics gfx )
 	{
@@ -96,13 +103,14 @@ class Window
 		theGame.ComposeFrame( gfx );
 	}
 	
+	// Returns screen size.
 	@Override
 	public Dimension getPreferredSize()
 	{
 		return( new Dimension( ScreenWidth,ScreenHeight ) );
 	}
 	
-	// create the GUI explicitly on the Swing event thread
+	// Create the GUI explicitly on the Swing event thread.
 	public void CreateAndShowGui()
 	{
 		// Window mainPanel = new Window();
@@ -115,6 +123,7 @@ class Window
 		frame.setVisible( true );
 	}
 	
+	// Update and draw.
 	public void Progress()
 	{
 		theGame.UpdateModel( this );

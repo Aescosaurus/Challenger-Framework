@@ -1,29 +1,28 @@
 package Framework;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
+// Main game file.
 public class Game
 {
 	// User created variables.
-	int x = 50;
+	
 	// 
+	// Called once when game is instantiated.
 	public Game()
 	{
 		
 	}
 	
+	// Update is called once per frame.
 	public void UpdateModel( Window wnd )
 	{
-		if( wnd.kbd.KeyIsPressed( 'D' ) )
-		{
-			++x;
-		}
+		
 	}
 	
+	// Called each frame after update.
 	public void ComposeFrame( Graphics gfx )
 	{
-		gfx.setColor( Color.red );
-		gfx.fillRect( x,0,10,10 );
+		
 	}
 }
